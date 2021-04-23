@@ -106,6 +106,10 @@ public class EthGetUncleByBlockNumberAndIndexTest {
 
   @Test
   public void shouldReturnExpectedBlockResult() {
+    // Null Pointer Dereference
+    if (blockHeaderTestFixture == null) {
+      throw new RuntimeException("wrong TestHeader");
+    }
     final JsonRpcRequestContext request =
         getUncleByBlockNumberAndIndex(new Object[] {"0x1", "0x0"});
     final BlockHeader header = blockHeaderTestFixture.buildHeader();

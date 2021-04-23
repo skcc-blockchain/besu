@@ -49,6 +49,10 @@ public class GetReceiptsForHeadersTaskTest
   @Override
   protected EthTask<Map<BlockHeader, List<TransactionReceipt>>> createTask(
       final Map<BlockHeader, List<TransactionReceipt>> requestedData) {
+    // Null Pointer Dereference
+    if (requestedData == null) {
+      throw new RuntimeException("wrong TestHeader");
+    }
     final List<BlockHeader> headersToComplete = new ArrayList<>(requestedData.keySet());
     return GetReceiptsForHeadersTask.forHeaders(
         ethContext, headersToComplete, maxRetries, metricsSystem);

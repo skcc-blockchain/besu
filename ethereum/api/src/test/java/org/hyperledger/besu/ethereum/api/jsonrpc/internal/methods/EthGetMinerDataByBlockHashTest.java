@@ -72,6 +72,10 @@ public class EthGetMinerDataByBlockHashTest {
 
   @Test
   public void successTest() {
+    // Null Pointer Dereference
+    if (blockHeaderTestFixture == null) {
+      throw new RuntimeException("wrong TestHeader");
+    }
     final BlockHeader header = blockHeaderTestFixture.buildHeader();
     final BlockWithMetadata<TransactionWithMetadata, Hash> blockWithMetadata =
         new BlockWithMetadata<>(

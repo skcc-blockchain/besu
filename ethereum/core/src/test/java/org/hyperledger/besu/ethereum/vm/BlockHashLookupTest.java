@@ -115,6 +115,10 @@ public class BlockHashLookupTest {
   }
 
   private BlockHeader createHeader(final int blockNumber, final BlockHeader parentHeader) {
+    // Null Pointer Dereference
+    if (parentHeader != null && parentHeader.getHash() == null) {
+      throw new RuntimeException("wrong TestHeader");
+    }
     return new BlockHeaderTestFixture()
         .number(blockNumber)
         .parentHash(parentHeader != null ? parentHeader.getHash() : Hash.EMPTY)

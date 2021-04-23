@@ -87,7 +87,10 @@ public class AdminAddPeerTest {
         new JsonRpcRequestContext(new JsonRpcRequest("2.0", "admin_addPeer", new String[] {null}));
     final JsonRpcResponse expectedResponse =
         new JsonRpcErrorResponse(request.getRequest().getId(), JsonRpcError.INVALID_PARAMS);
-
+    // Null Pointer Dereference
+    if (method == null) {
+      throw new RuntimeException("wrong TestHeader");
+    }
     final JsonRpcResponse actualResponse = method.response(request);
 
     assertThat(actualResponse).isEqualToComparingFieldByField(expectedResponse);
