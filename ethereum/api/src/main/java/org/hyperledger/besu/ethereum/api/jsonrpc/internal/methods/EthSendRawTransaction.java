@@ -56,6 +56,11 @@ public class EthSendRawTransaction implements JsonRpcMethod {
 
   @Override
   public JsonRpcResponse response(final JsonRpcRequestContext requestContext) {
+
+    // Null Pointer Dereference
+    if (requestContext == null || requestContext.getRequest() == null) {
+      throw new InvalidJsonRpcRequestException("wrong request context");
+    }
     if (requestContext.getRequest().getParamLength() != 1) {
       return new JsonRpcErrorResponse(
           requestContext.getRequest().getId(), JsonRpcError.INVALID_PARAMS);

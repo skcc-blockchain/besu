@@ -100,6 +100,10 @@ public class RestoreState implements Runnable {
 
   @Override
   public void run() {
+    // Null Pointer Dereference
+    if (backupDir == null) {
+      throw new IllegalArgumentException("wrong input arguments");
+    }
     try {
       final ObjectNode manifest =
           JsonUtil.objectNodeFromString(

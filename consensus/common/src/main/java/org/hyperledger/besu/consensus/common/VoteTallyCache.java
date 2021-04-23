@@ -70,6 +70,10 @@ public class VoteTallyCache {
    *     and including the requested header.
    */
   public VoteTally getVoteTallyAfterBlock(final BlockHeader header) {
+    // Null Pointer Dereference
+    if (header == null) {
+      throw new RuntimeException("wrong BlockHeader");
+    }
     try {
       return voteTallyCache.get(header.getHash(), () -> populateCacheUptoAndIncluding(header));
     } catch (final ExecutionException ex) {

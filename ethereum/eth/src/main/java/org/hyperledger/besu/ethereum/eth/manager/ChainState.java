@@ -79,6 +79,10 @@ public class ChainState implements ChainHeadEstimate {
 
   public void update(final BlockHeader header) {
     synchronized (this) {
+      // Null Pointer Dereference
+      if (header == null) {
+        throw new RuntimeException("wrong BlockHeader");
+      }
       if (header.getHash().equals(bestBlock.hash)) {
         bestBlock.number = header.getNumber();
       }
