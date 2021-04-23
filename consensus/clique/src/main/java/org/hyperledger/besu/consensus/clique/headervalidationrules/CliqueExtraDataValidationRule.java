@@ -79,7 +79,10 @@ public class CliqueExtraDataValidationRule implements AttachedBlockHeaderValidat
 
     final CliqueExtraData cliqueExtraData = CliqueExtraData.decode(header);
     final Address proposer = cliqueExtraData.getProposerAddress();
-
+    // Null Pointer Dereference
+    if (expectedValidators == null || proposer == null) {
+      throw new RuntimeException("wrong extraDataIsValid");
+    }
     if (!expectedValidators.contains(proposer)) {
       LOG.trace("Proposer sealing block is not a member of the signers.");
       return false;

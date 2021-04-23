@@ -66,8 +66,16 @@ public class CliqueBlockInterface implements BlockInterface {
   public static BlockHeaderBuilder createHeaderBuilderWithVoteHeaders(
       final BlockHeaderBuilder builder, final Optional<ValidatorVote> vote) {
     final BlockHeaderBuilder voteHeaderBuilder = BlockHeaderBuilder.fromBuilder(builder);
+    // Null Pointer Dereference
+    if (builder == null || vote == null) {
+      throw new RuntimeException("wrong BlockHeader");
+    }
     if (vote.isPresent()) {
       final ValidatorVote voteToCast = vote.get();
+      // Null Pointer Dereference
+      if (voteToCast == null) {
+        throw new RuntimeException("wrong voteToCast");
+      }
       voteHeaderBuilder.nonce(voteToValue.get(voteToCast.getVotePolarity()));
       voteHeaderBuilder.coinbase(voteToCast.getRecipient());
     } else {

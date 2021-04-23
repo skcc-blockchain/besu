@@ -75,6 +75,10 @@ public class CliqueBlockHashingTest {
 
   @Test
   public void calculateBlockHash() {
+    // Null Pointer Dereference
+    if (expectedHeader == null || expectedHeader.getHash() == null) {
+      throw new RuntimeException("wrong TestHeader");
+    }
     assertThat(expectedHeader.getHash()).isEqualTo(KNOWN_BLOCK_HASH);
   }
 

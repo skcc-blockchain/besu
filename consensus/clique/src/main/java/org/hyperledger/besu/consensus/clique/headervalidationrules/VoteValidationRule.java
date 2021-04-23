@@ -34,6 +34,10 @@ public class VoteValidationRule implements DetachedBlockHeaderValidationRule {
    */
   @Override
   public boolean validate(final BlockHeader header, final BlockHeader parent) {
+    // Null Pointer Dereference
+    if (header == null) {
+      throw new RuntimeException("wrong BlockHeader");
+    }
     final long nonce = header.getNonce();
     if (!CliqueBlockInterface.isValidVoteValue(nonce)) {
       LOG.trace("Nonce value ({}) is neither auth or drop.", nonce);

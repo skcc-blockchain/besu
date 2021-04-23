@@ -256,7 +256,10 @@ public class IbftGetSignerMetricsTest {
     final Address proposerAddressBlock = VALIDATORS[(int) (number % VALIDATORS.length)];
 
     final BlockHeader header = new BlockHeaderTestFixture().number(number).buildHeader();
-
+    // Null Pointer Dereference
+    if (voteTallyCache == null || header == null) {
+      throw new RuntimeException("wrong TestHeader");
+    }
     when(blockchainQueries.getBlockHeaderByNumber(number)).thenReturn(Optional.of(header));
     when(blockInterface.getProposerOfBlock(header)).thenReturn(proposerAddressBlock);
     when(voteTallyCache.getVoteTallyAfterBlock(header))

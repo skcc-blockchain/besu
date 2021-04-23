@@ -126,6 +126,10 @@ public class CliqueBlockInterfaceTest {
   public void extractsValidatorsFromHeader() {
     final BlockHeader header =
         TestHelpers.createCliqueSignedBlockHeader(headerBuilder, proposerKeys, validatorList);
+    // Null Pointer Dereference
+    if (blockInterface == null || header == null) {
+      throw new RuntimeException("wrong TestHeader");
+    }
     final Collection<Address> extractedValidators = blockInterface.validatorsInBlock(header);
 
     assertThat(extractedValidators).isEqualTo(validatorList);

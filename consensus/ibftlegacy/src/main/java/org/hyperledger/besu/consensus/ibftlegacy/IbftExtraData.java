@@ -62,6 +62,10 @@ public class IbftExtraData implements ParsedExtraData {
   }
 
   public static IbftExtraData decode(final BlockHeader header) {
+    // Null Pointer Dereference
+    if (header == null) {
+      throw new RuntimeException("wrong BlockHeader");
+    }
     final Object inputExtraData = header.getParsedExtraData();
     if (inputExtraData instanceof IbftExtraData) {
       return (IbftExtraData) inputExtraData;

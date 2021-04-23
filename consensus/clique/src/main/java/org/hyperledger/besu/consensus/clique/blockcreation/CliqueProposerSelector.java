@@ -46,7 +46,10 @@ public class CliqueProposerSelector {
    * @return The address of the node which is to propose a block for the provided Round.
    */
   public Address selectProposerForNextBlock(final BlockHeader parentHeader) {
-
+    // Null Pointer Dereference
+    if (parentHeader == null || voteTallyCache == null) {
+      throw new RuntimeException("wrong CliqueProposerSelector");
+    }
     final VoteTally parentVoteTally = voteTallyCache.getVoteTallyAfterBlock(parentHeader);
     final List<Address> validatorSet = new ArrayList<>(parentVoteTally.getValidators());
 

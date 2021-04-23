@@ -50,6 +50,14 @@ public class CliqueBlockHashing {
    */
   public static Address recoverProposerAddress(
       final BlockHeader header, final CliqueExtraData cliqueExtraData) {
+    // Null Pointer Dereference
+    if (header == null) {
+      throw new RuntimeException("wrong BlockHeader");
+    }
+    // Null Pointer Dereference
+    if (cliqueExtraData == null || cliqueExtraData.getProposerSeal() == null) {
+      throw new RuntimeException("wrong cliqueExtraData");
+    }
     if (!cliqueExtraData.getProposerSeal().isPresent()) {
       if (header.getNumber() == BlockHeader.GENESIS_BLOCK_NUMBER) {
         return Address.ZERO;
@@ -67,6 +75,10 @@ public class CliqueBlockHashing {
   }
 
   private static Bytes encodeExtraDataWithoutProposerSeal(final CliqueExtraData cliqueExtraData) {
+    // Null Pointer Dereference
+    if (cliqueExtraData == null || cliqueExtraData.encode() == null) {
+      throw new RuntimeException("wrong cliqueExtraData");
+    }
     final Bytes extraDataBytes = cliqueExtraData.encode();
     // Always trim off final 65 bytes (which maybe zeros)
     return extraDataBytes.slice(0, extraDataBytes.size() - Signature.BYTES_REQUIRED);

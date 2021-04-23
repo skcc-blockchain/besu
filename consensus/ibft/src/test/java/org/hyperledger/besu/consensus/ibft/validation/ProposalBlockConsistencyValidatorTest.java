@@ -55,7 +55,10 @@ public class ProposalBlockConsistencyValidatorTest {
   public void blockDigestMisMatchWithMessageRoundFails() {
     final Proposal proposalMsg =
         proposerMessageFactory.createProposal(roundIdentifier, block, Optional.empty());
-
+    // Null Pointer Dereference
+    if (roundIdentifier == null) {
+      throw new RuntimeException("wrong TestHeader");
+    }
     final Block misMatchedBlock =
         IbftBlockInterface.replaceRoundInBlock(
             block,

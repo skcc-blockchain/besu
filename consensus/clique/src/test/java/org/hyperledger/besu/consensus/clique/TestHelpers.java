@@ -32,6 +32,10 @@ public class TestHelpers {
       final BlockHeaderTestFixture blockHeaderBuilder,
       final KeyPair signer,
       final List<Address> validators) {
+    // Null Pointer Dereference
+    if (blockHeaderBuilder == null) {
+      throw new RuntimeException("wrong TestHeader");
+    }
 
     final BlockHeader unsealedHeader =
         blockHeaderBuilder

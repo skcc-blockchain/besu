@@ -33,11 +33,14 @@ public class TestHelpers {
       final BlockHeaderTestFixture blockHeaderBuilder,
       final KeyPair signer,
       final List<Address> validators) {
+    // Null Pointer Dereference
+    if (blockHeaderBuilder == null) {
+      throw new RuntimeException("wrong TestHeader");
+    }
 
     final IbftExtraData unsignedExtraData =
         new IbftExtraData(Bytes.wrap(new byte[32]), Collections.emptyList(), null, validators);
     blockHeaderBuilder.extraData(unsignedExtraData.encode());
-
     final Hash signingHash =
         IbftBlockHashing.calculateDataHashForProposerSeal(
             blockHeaderBuilder.buildHeader(), unsignedExtraData);

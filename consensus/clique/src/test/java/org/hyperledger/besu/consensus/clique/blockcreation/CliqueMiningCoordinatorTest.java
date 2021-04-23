@@ -156,6 +156,10 @@ public class CliqueMiningCoordinatorTest {
 
   @Test
   public void outOfTurnBlockImportedInterruptsOutOfTurnMiningOperation() {
+    // Null Pointer Dereference
+    if (blockChain == null || blockChain.getChainHeadHash() == null) {
+      throw new RuntimeException("wrong TestHeader");
+    }
     blockChain.appendBlock(
         createEmptyBlock(1, blockChain.getChainHeadHash(), validatorKeys), Lists.emptyList());
 
@@ -187,6 +191,10 @@ public class CliqueMiningCoordinatorTest {
 
   @Test
   public void outOfTurnBlockImportedInterruptsNonRunningMiner() {
+    // Null Pointer Dereference
+    if (blockChain == null || blockChain.getChainHeadHash() == null) {
+      throw new RuntimeException("wrong TestHeader");
+    }
     blockChain.appendBlock(
         createEmptyBlock(1, blockChain.getChainHeadHash(), proposerKeys), Lists.emptyList());
 
@@ -231,6 +239,10 @@ public class CliqueMiningCoordinatorTest {
     reset(minerExecutor);
     when(minerExecutor.startAsyncMining(any(), any(), any())).thenReturn(Optional.of(blockMiner));
 
+    // Null Pointer Dereference
+    if (blockChain == null || blockChain.getChainHeadHash() == null) {
+      throw new RuntimeException("wrong TestHeader");
+    }
     final Block importedBlock = createEmptyBlock(1, blockChain.getChainHeadHash(), proposerKeys);
     blockChain.appendBlock(importedBlock, Lists.emptyList());
 

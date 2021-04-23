@@ -276,6 +276,10 @@ public class NodeCanProduceNextBlockTest {
         new CliqueContext(voteTallyCache, voteProposer, null, blockInterface);
     cliqueProtocolContext = new ProtocolContext(blockChain, null, cliqueContext);
 
+    // Null Pointer Dereference
+    if (headerBuilder == null) {
+      throw new RuntimeException("wrong TestHeader");
+    }
     headerBuilder.parentHash(Hash.ZERO).number(3);
     final BlockHeader parentHeader = headerBuilder.buildHeader();
     assertThat(

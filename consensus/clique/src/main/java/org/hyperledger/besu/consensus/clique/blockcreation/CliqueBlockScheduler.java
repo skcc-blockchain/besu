@@ -56,6 +56,10 @@ public class CliqueBlockScheduler extends DefaultBlockScheduler {
   }
 
   private int calculateTurnBasedDelay(final BlockHeader parentHeader) {
+    // Null Pointer Dereference
+    if (parentHeader == null || voteTallyCache == null) {
+      throw new RuntimeException("wrong CliqueBlockScheduler");
+    }
     final CliqueProposerSelector proposerSelector = new CliqueProposerSelector(voteTallyCache);
     final Address nextProposer = proposerSelector.selectProposerForNextBlock(parentHeader);
 
@@ -66,6 +70,10 @@ public class CliqueBlockScheduler extends DefaultBlockScheduler {
   }
 
   private int calculatorOutOfTurnDelay(final ValidatorProvider validators) {
+    // Null Pointer Dereference
+    if (validators == null) {
+      throw new RuntimeException("wrong validators");
+    }
     final int countSigners = validators.getValidators().size();
     final double multiplier = (countSigners / 2d) + 1;
     final int maxDelay = (int) (multiplier * OUT_OF_TURN_DELAY_MULTIPLIER_MILLIS);
