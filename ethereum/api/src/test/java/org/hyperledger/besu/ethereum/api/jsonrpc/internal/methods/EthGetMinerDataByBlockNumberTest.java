@@ -71,7 +71,7 @@ public class EthGetMinerDataByBlockNumberTest {
   @Test
   public void successTest() {
     // Null Pointer Dereference
-    if (blockHeaderTestFixture == null) {
+    if (blockHeaderTestFixture == null || blockHeaderTestFixture.buildHeader() == null) {
       throw new RuntimeException("wrong TestHeader");
     }
     final BlockHeader header = blockHeaderTestFixture.buildHeader();

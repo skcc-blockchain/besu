@@ -67,13 +67,16 @@ public class IbftLegacyBlockInterface implements BlockInterface {
   public static BlockHeaderBuilder insertVoteToHeaderBuilder(
       final BlockHeaderBuilder builder, final Optional<ValidatorVote> vote) {
     // Null Pointer Dereference
-    if (builder == null || vote == null) {
+    if (builder == null) {
       throw new RuntimeException("wrong BlockHeader");
     }
     if (vote.isPresent()) {
       final ValidatorVote voteToCast = vote.get();
       // Null Pointer Dereference
-      if (voteToCast == null) {
+      if (voteToValue == null
+          || voteToCast == null
+          || voteToCast.getVotePolarity() == null
+          || voteToCast.getRecipient() == null) {
         throw new RuntimeException("wrong voteToCast");
       }
       builder.nonce(voteToValue.get(voteToCast.getVotePolarity()));

@@ -277,7 +277,7 @@ public class NodeCanProduceNextBlockTest {
     cliqueProtocolContext = new ProtocolContext(blockChain, null, cliqueContext);
 
     // Null Pointer Dereference
-    if (headerBuilder == null) {
+    if (headerBuilder == null || headerBuilder.buildHeader() == null) {
       throw new RuntimeException("wrong TestHeader");
     }
     headerBuilder.parentHash(Hash.ZERO).number(3);

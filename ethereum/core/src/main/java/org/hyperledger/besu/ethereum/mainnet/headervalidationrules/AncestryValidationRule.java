@@ -30,7 +30,7 @@ public class AncestryValidationRule implements DetachedBlockHeaderValidationRule
   @Override
   public boolean validate(final BlockHeader header, final BlockHeader parent) {
     // Null Pointer Dereference
-    if (header == null || parent == null) {
+    if (header == null || parent == null || parent.getHash() == null) {
       throw new RuntimeException("wrong BlockHeader");
     }
     if (!header.getParentHash().equals(parent.getHash())) {

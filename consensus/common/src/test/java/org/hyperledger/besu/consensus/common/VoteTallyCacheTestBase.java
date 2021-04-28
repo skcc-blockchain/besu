@@ -40,7 +40,7 @@ public class VoteTallyCacheTestBase {
   protected Block createEmptyBlock(final long blockNumber, final Hash parentHash) {
     headerBuilder.number(blockNumber).parentHash(parentHash).coinbase(AddressHelpers.ofValue(0));
     // Null Pointer Dereference
-    if (headerBuilder == null) {
+    if (headerBuilder == null || headerBuilder.buildHeader() == null) {
       throw new RuntimeException("wrong TestHeader");
     }
     return new Block(

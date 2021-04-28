@@ -66,12 +66,16 @@ public class CliqueBlockScheduler extends DefaultBlockScheduler {
     if (nextProposer.equals(localNodeAddress)) {
       return 0;
     }
+    // Null Pointer Dereference
+    if (voteTallyCache.getVoteTallyAfterBlock(parentHeader) == null) {
+      throw new RuntimeException("wrong CliqueBlockScheduler");
+    }
     return calculatorOutOfTurnDelay(voteTallyCache.getVoteTallyAfterBlock(parentHeader));
   }
 
   private int calculatorOutOfTurnDelay(final ValidatorProvider validators) {
     // Null Pointer Dereference
-    if (validators == null) {
+    if (validators == null || validators.getValidators() == null) {
       throw new RuntimeException("wrong validators");
     }
     final int countSigners = validators.getValidators().size();

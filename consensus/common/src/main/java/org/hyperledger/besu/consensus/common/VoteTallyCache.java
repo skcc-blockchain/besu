@@ -71,7 +71,7 @@ public class VoteTallyCache {
    */
   public VoteTally getVoteTallyAfterBlock(final BlockHeader header) {
     // Null Pointer Dereference
-    if (header == null) {
+    if (header == null || header.getHash() == null) {
       throw new RuntimeException("wrong BlockHeader");
     }
     try {

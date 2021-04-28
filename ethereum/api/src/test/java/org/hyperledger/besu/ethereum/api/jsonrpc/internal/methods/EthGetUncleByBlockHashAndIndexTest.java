@@ -131,7 +131,7 @@ public class EthGetUncleByBlockHashAndIndexTest {
   @Test
   public void shouldReturnExpectedBlockResult() {
     // Null Pointer Dereference
-    if (blockHeaderTestFixture == null) {
+    if (blockHeaderTestFixture == null || blockHeaderTestFixture.buildHeader() == null) {
       throw new RuntimeException("wrong TestHeader");
     }
     final JsonRpcRequestContext request =

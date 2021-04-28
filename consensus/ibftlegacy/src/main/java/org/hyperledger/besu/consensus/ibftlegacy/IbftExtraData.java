@@ -66,6 +66,9 @@ public class IbftExtraData implements ParsedExtraData {
     if (header == null) {
       throw new RuntimeException("wrong BlockHeader");
     }
+    if (header.getParsedExtraData() == null) {
+      // throw new RuntimeException("wrong BlockHeader");
+    }
     final Object inputExtraData = header.getParsedExtraData();
     if (inputExtraData instanceof IbftExtraData) {
       return (IbftExtraData) inputExtraData;

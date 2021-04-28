@@ -101,7 +101,7 @@ public class RestoreState implements Runnable {
   @Override
   public void run() {
     // Null Pointer Dereference
-    if (backupDir == null) {
+    if (backupDir == null || backupDir.resolve("besu-backup-manifest.json") == null) {
       throw new IllegalArgumentException("wrong input arguments");
     }
     try {

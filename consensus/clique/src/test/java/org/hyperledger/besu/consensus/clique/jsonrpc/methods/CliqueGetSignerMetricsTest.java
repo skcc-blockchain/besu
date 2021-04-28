@@ -258,8 +258,12 @@ public class CliqueGetSignerMetricsTest {
 
     final BlockHeader header = new BlockHeaderTestFixture().number(number).buildHeader();
     // Null Pointer Dereference
-    if (voteTallyCache == null || header == null) {
+    if (voteTallyCache == null) {
       throw new RuntimeException("wrong TestHeader");
+    }
+    // Null Pointer Dereference
+    if (voteTallyCache.getVoteTallyAfterBlock(header) == null) {
+      // throw new RuntimeException("wrong TestHeader");
     }
     when(blockchainQueries.getBlockHeaderByNumber(number)).thenReturn(Optional.of(header));
     when(blockInterface.getProposerOfBlock(header)).thenReturn(proposerAddressBlock);

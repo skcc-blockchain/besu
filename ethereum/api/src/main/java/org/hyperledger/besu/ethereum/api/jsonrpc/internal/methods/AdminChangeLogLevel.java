@@ -47,6 +47,10 @@ public class AdminChangeLogLevel implements JsonRpcMethod {
         throw new InvalidJsonRpcParameters("wrong request context");
       }
       final Level logLevel = requestContext.getRequiredParameter(0, Level.class);
+      // Null Pointer Dereference
+      if (logLevel == null) {
+        throw new InvalidJsonRpcParameters("wrong request context");
+      }
       final Optional<String[]> optionalLogFilters =
           requestContext.getOptionalParameter(1, String[].class);
       optionalLogFilters.ifPresentOrElse(
@@ -62,7 +66,9 @@ public class AdminChangeLogLevel implements JsonRpcMethod {
 
   private void setLogLevel(final String logFilter, final Level logLevel) {
     // Null Pointer Dereference
-    if (logLevel == null) {
+    if (logLevel == null || logLevel.name() == null) {
+      // throw new RuntimeException("wrong logLevel");
+      LOG.log(Level.OFF, "fail to change logging level {} ", logFilter);
       return;
     }
     LOG.log(Level.OFF, "Setting {} logging level to {} ", logFilter, logLevel.name());

@@ -34,7 +34,7 @@ public class TestHelpers {
       final KeyPair signer,
       final List<Address> validators) {
     // Null Pointer Dereference
-    if (blockHeaderBuilder == null) {
+    if (blockHeaderBuilder == null || blockHeaderBuilder.buildHeader() == null) {
       throw new RuntimeException("wrong TestHeader");
     }
 

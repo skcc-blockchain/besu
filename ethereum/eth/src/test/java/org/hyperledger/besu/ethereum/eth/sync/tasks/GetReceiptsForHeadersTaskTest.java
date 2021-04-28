@@ -50,7 +50,7 @@ public class GetReceiptsForHeadersTaskTest
   protected EthTask<Map<BlockHeader, List<TransactionReceipt>>> createTask(
       final Map<BlockHeader, List<TransactionReceipt>> requestedData) {
     // Null Pointer Dereference
-    if (requestedData == null) {
+    if (requestedData == null || requestedData.keySet() == null) {
       throw new RuntimeException("wrong TestHeader");
     }
     final List<BlockHeader> headersToComplete = new ArrayList<>(requestedData.keySet());

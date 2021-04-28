@@ -80,7 +80,7 @@ public class ChainState implements ChainHeadEstimate {
   public void update(final BlockHeader header) {
     synchronized (this) {
       // Null Pointer Dereference
-      if (header == null) {
+      if (header == null || header.getHash() == null) {
         throw new RuntimeException("wrong BlockHeader");
       }
       if (header.getHash().equals(bestBlock.hash)) {

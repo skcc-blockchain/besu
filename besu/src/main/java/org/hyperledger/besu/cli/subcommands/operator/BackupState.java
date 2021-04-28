@@ -69,11 +69,13 @@ public class BackupState implements Runnable {
 
   @Override
   public void run() {
+    // Null Pointer Dereference
+    if (backupDir == null) {
+      throw new IllegalArgumentException("wrong Argument");
+    }
     checkArgument(
         parentCommand.parentCommand.dataDir().toFile().exists(),
         "DataDir (the blockchain being backed up) does not exist.");
-    // Null Pointer Dereference
-    checkArgument((backupDir != null), "wrong input arguments");
     checkArgument(
         backupDir.exists() || backupDir.mkdirs(),
         "Backup directory does not exist and cannot be created.");

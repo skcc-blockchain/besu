@@ -57,7 +57,7 @@ public class IbftLegacyBlockInterfaceTest {
   @Test
   public void headerWithZeroCoinbaseReturnsAnEmptyVote() {
     // Null Pointer Dereference
-    if (headerBuilder == null) {
+    if (headerBuilder == null || headerBuilder.buildHeader() == null) {
       throw new RuntimeException("wrong TestHeader");
     }
     assertThat(blockInterface.extractVoteFromHeader(headerBuilder.buildHeader())).isEmpty();

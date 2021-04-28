@@ -51,10 +51,6 @@ public class CliqueBlockHashing {
   public static Address recoverProposerAddress(
       final BlockHeader header, final CliqueExtraData cliqueExtraData) {
     // Null Pointer Dereference
-    if (header == null) {
-      throw new RuntimeException("wrong BlockHeader");
-    }
-    // Null Pointer Dereference
     if (cliqueExtraData == null || cliqueExtraData.getProposerSeal() == null) {
       throw new RuntimeException("wrong cliqueExtraData");
     }

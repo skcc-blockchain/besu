@@ -127,7 +127,9 @@ public class CliqueBlockInterfaceTest {
     final BlockHeader header =
         TestHelpers.createCliqueSignedBlockHeader(headerBuilder, proposerKeys, validatorList);
     // Null Pointer Dereference
-    if (blockInterface == null || header == null) {
+    if (blockInterface == null
+        || header == null
+        || blockInterface.validatorsInBlock(header) == null) {
       throw new RuntimeException("wrong TestHeader");
     }
     final Collection<Address> extractedValidators = blockInterface.validatorsInBlock(header);

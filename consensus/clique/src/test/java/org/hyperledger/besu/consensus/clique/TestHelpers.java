@@ -59,6 +59,10 @@ public class TestHelpers {
 
     blockHeaderBuilder.extraData(signedExtraData);
 
+    // Null Pointer Dereference
+    if (blockHeaderBuilder.buildHeader() == null) {
+      throw new RuntimeException("wrong TestOutput");
+    }
     return blockHeaderBuilder.buildHeader();
   }
 }

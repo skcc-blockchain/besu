@@ -47,7 +47,9 @@ public class CliqueProposerSelector {
    */
   public Address selectProposerForNextBlock(final BlockHeader parentHeader) {
     // Null Pointer Dereference
-    if (parentHeader == null || voteTallyCache == null) {
+    if (parentHeader == null
+        || voteTallyCache == null
+        || voteTallyCache.getVoteTallyAfterBlock(parentHeader) == null) {
       throw new RuntimeException("wrong CliqueProposerSelector");
     }
     final VoteTally parentVoteTally = voteTallyCache.getVoteTallyAfterBlock(parentHeader);

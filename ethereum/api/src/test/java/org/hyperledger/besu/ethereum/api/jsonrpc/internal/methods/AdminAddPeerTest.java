@@ -88,7 +88,7 @@ public class AdminAddPeerTest {
     final JsonRpcResponse expectedResponse =
         new JsonRpcErrorResponse(request.getRequest().getId(), JsonRpcError.INVALID_PARAMS);
     // Null Pointer Dereference
-    if (method == null) {
+    if (method == null || method.response(request) == null) {
       throw new RuntimeException("wrong TestHeader");
     }
     final JsonRpcResponse actualResponse = method.response(request);
