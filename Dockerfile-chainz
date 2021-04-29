@@ -1,0 +1,73 @@
+# chainz@20.10.2
+#FROM adoptopenjdk/openjdk11:jdk-11.0.11_9-ubuntu-slim AS builder
+FROM adoptopenjdk/openjdk11:jdk-11.0.7_10-ubuntu-slim AS builder
+
+RUN apt-get update
+RUN apt-get install -y libsodium23 git gradle
+
+RUN mkdir /besu-client
+WORKDIR /besu-client
+COPY . .
+
+#RUN ./gradlew build -x test
+RUN ./gradlew build
+RUN ./gradlew integrationTest LTS
+
+ARG VERSION
+
+RUN tar -xvf "build/distributions/besu-$VERSION.tar.gz"
+RUN "besu-$VERSION/bin/besu" --version
+
+RUN mv "/besu-client/besu-$VERSION" /besu-exe
+RUN /besu-exe/bin/besu --version
+
+#==================================================
+# origin: besu-client/docker/openjdk-11/Dockerfile
+FROM openjdk:11.0.7-jre-slim-buster
+
+RUN adduser --disabled-password --gecos "" --home /opt/besu besu && \
+    chown besu:besu /opt/besu
+
+USER besu
+WORKDIR /opt/besu
+
+COPY --from=builder --chown=besu:besu /besu-exe /opt/besu
+RUN /opt/besu/bin/besu --version
+
+# Expose services ports
+# 8545 HTTP JSON-RPC
+# 8546 WS JSON-RPC
+# 8547 HTTP GraphQL
+# 30303 P2P
+EXPOSE 8545 8546 8547 30303
+
+# defaults for host interfaces
+ENV BESU_RPC_HTTP_HOST 0.0.0.0
+ENV BESU_RPC_WS_HOST 0.0.0.0
+ENV BESU_GRAPHQL_HTTP_HOST 0.0.0.0
+ENV BESU_PID_PATH "/tmp/pid"
+# Tracing defaults
+# To enable tracing, uncomment next line
+#ENV TRACING=ENABLED
+ENV OTEL_EXPORTER=otlp
+ENV OTEL_OTLP_ENDPOINT="0.0.0.0:55680"
+ENV OTEL_RESOURCE_ATTRIBUTES="service.name=besu-$VERSION"
+
+ENV PATH="/opt/besu/bin:${PATH}"
+ENTRYPOINT ["besu"]
+HEALTHCHECK --start-period=5s --interval=5s --timeout=1s --retries=10 CMD bash -c "[ -f /tmp/pid ]"
+
+# Build-time metadata as defined at http://label-schema.org
+ARG BUILD_DATE
+ARG VCS_REF
+ARG VERSION
+LABEL org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.name="Besu" \
+      org.label-schema.description="Enterprise Ethereum client" \
+      org.label-schema.url="https://besu.hyperledger.org/" \
+      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.vcs-url="https://github.com/hyperledger/besu.git" \
+      org.label-schema.vendor="Hyperledger" \
+      org.label-schema.version=$VERSION \
+      org.label-schema.schema-version="1.0"
+

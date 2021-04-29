@@ -11,3 +11,6 @@ docs
 *.md
 
 Jenkins*
+
+Dockerfile-chainz
+dockerBuilder-chainz.sh
