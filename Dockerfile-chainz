@@ -9,8 +9,8 @@ RUN mkdir /besu-client
 WORKDIR /besu-client
 COPY . .
 
-#RUN ./gradlew build -x test
-RUN ./gradlew build
+RUN ./gradlew build -x test
+#RUN ./gradlew build
 RUN ./gradlew integrationTest LTS
 
 ARG VERSION
