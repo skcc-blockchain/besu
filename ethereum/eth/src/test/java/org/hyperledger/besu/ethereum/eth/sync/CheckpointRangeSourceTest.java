@@ -76,9 +76,7 @@ public class CheckpointRangeSourceTest {
     when(syncTargetChecker.shouldContinueDownloadingFromSyncTarget(peer, commonAncestor))
         .thenReturn(false);
     // Null Pointer Dereference
-    if (source == null) {
-      throw new RuntimeException("wrong TestHeader");
-    }
+    assertThat(source).isNotNull();
     source.next();
     verify(checkpointFetcher).getNextCheckpointHeaders(peer, commonAncestor);
 
@@ -99,9 +97,7 @@ public class CheckpointRangeSourceTest {
     when(checkpointFetcher.getNextCheckpointHeaders(peer, commonAncestor))
         .thenReturn(CompletableFuture.failedFuture(new TimeoutException()));
     // Null Pointer Dereference
-    if (source == null) {
-      throw new RuntimeException("wrong TestHeader");
-    }
+    assertThat(source).isNotNull();
     for (int i = 1; i <= CHECKPOINT_TIMEOUTS_PERMITTED; i++) {
       assertThat(source).hasNext();
       assertThat(source.next()).isNull();
@@ -118,9 +114,7 @@ public class CheckpointRangeSourceTest {
     when(checkpointFetcher.getNextCheckpointHeaders(peer, commonAncestor))
         .thenReturn(completedFuture(emptyList()));
     // Null Pointer Dereference
-    if (source == null) {
-      throw new RuntimeException("wrong TestHeader");
-    }
+    assertThat(source).isNotNull();
     for (int i = 1; i <= CHECKPOINT_TIMEOUTS_PERMITTED; i++) {
       assertThat(source).hasNext();
       assertThat(source.next()).isNull();
@@ -138,9 +132,7 @@ public class CheckpointRangeSourceTest {
     when(checkpointFetcher.getNextCheckpointHeaders(peer, commonAncestor))
         .thenReturn(completedFuture(emptyList()));
     // Null Pointer Dereference
-    if (source == null) {
-      throw new RuntimeException("wrong TestHeader");
-    }
+    assertThat(source).isNotNull();
     assertThat(source.next()).isNull();
     verify(checkpointFetcher).getNextCheckpointHeaders(peer, commonAncestor);
     verify(ethScheduler).scheduleFutureTask(any(Supplier.class), eq(RETRY_DELAY_DURATION));

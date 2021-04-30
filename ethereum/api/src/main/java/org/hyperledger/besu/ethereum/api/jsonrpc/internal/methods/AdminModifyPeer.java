@@ -34,9 +34,11 @@ public abstract class AdminModifyPeer implements JsonRpcMethod {
   public JsonRpcResponse response(final JsonRpcRequestContext requestContext) {
 
     // Null Pointer Dereference
-    if (requestContext == null || requestContext.getRequest() == null) {
-      throw new InvalidJsonRpcParameters("wrong request context");
-    }
+    assert requestContext != null;
+    assert requestContext.getRequest() != null;
+    // if (requestContext == null || requestContext.getRequest() == null) {
+    //   throw new InvalidJsonRpcParameters("wrong request context");
+    // }
     if (requestContext.getRequest().getParamLength() != 1) {
       return new JsonRpcErrorResponse(
           requestContext.getRequest().getId(), JsonRpcError.INVALID_PARAMS);

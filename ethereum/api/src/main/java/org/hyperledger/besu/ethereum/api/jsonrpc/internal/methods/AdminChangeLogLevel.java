@@ -43,14 +43,16 @@ public class AdminChangeLogLevel implements JsonRpcMethod {
   public JsonRpcResponse response(final JsonRpcRequestContext requestContext) {
     try {
       // Null Pointer Dereference
-      if (requestContext == null) {
-        throw new InvalidJsonRpcParameters("wrong request context");
-      }
+      assert requestContext != null;
+      assert requestContext.getRequiredParameter(0, Level.class) != null;
+      // if (requestContext == null) {
+      //   throw new InvalidJsonRpcParameters("wrong request context");
+      // }
       final Level logLevel = requestContext.getRequiredParameter(0, Level.class);
       // Null Pointer Dereference
-      if (logLevel == null) {
-        throw new InvalidJsonRpcParameters("wrong request context");
-      }
+      // if (logLevel == null) {
+      //   throw new InvalidJsonRpcParameters("wrong request context");
+      // }
       final Optional<String[]> optionalLogFilters =
           requestContext.getOptionalParameter(1, String[].class);
       optionalLogFilters.ifPresentOrElse(
@@ -66,11 +68,12 @@ public class AdminChangeLogLevel implements JsonRpcMethod {
 
   private void setLogLevel(final String logFilter, final Level logLevel) {
     // Null Pointer Dereference
-    if (logLevel == null || logLevel.name() == null) {
-      // throw new RuntimeException("wrong logLevel");
-      LOG.log(Level.OFF, "fail to change logging level {} ", logFilter);
-      return;
-    }
+    assert logLevel != null;
+    assert logLevel.name() != null;
+    // if (logLevel == null || logLevel.name() == null) {
+    //   LOG.log(Level.OFF, "fail to change logging level {} ", logFilter);
+    //   return;
+    // }
     LOG.log(Level.OFF, "Setting {} logging level to {} ", logFilter, logLevel.name());
     Configurator.setAllLevels(logFilter, logLevel);
   }
