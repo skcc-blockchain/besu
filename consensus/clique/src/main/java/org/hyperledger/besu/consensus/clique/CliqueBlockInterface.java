@@ -73,7 +73,9 @@ public class CliqueBlockInterface implements BlockInterface {
     if (vote.isPresent()) {
       final ValidatorVote voteToCast = vote.get();
       // Null Pointer Dereference
-      if (voteToCast == null || voteToCast.getRecipient() == null) {
+      if (voteToCast == null
+          || voteToCast.getRecipient() == null
+          || voteToCast.getRecipient().size() != Address.SIZE) {
         throw new RuntimeException("wrong voteToCast");
       }
       voteHeaderBuilder.nonce(voteToValue.get(voteToCast.getVotePolarity()));
