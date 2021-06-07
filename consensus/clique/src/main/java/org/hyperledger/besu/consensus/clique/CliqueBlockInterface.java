@@ -67,7 +67,7 @@ public class CliqueBlockInterface implements BlockInterface {
       final BlockHeaderBuilder builder, final Optional<ValidatorVote> vote) {
     final BlockHeaderBuilder voteHeaderBuilder = BlockHeaderBuilder.fromBuilder(builder);
     // Null Pointer Dereference
-    if (builder == null || vote == null) {
+    if (builder == null || vote == null || voteHeaderBuilder == null) {
       throw new RuntimeException("wrong BlockHeader");
     }
     if (vote.isPresent()) {
